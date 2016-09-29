@@ -1,71 +1,56 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
+/**
+ * 全局配置
+ * @author kali.liu <kali.liu@qq.com>
+ * @link http://www.fansye.com/
+ * @copyright Copyright &copy; 2016-2068 Fansye.com Inc
+ */
 
-$config = [
-    'id' => 'basic',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'modules' => [
-        'admini' => [
-            'class' => 'app\modules\admini\Module',
+$configs = [];
+$configs['id'] = 'Y2OS';
+$configs['name'] = 'YiiBlog';
+$configs['language'] = 'zh-CN';
+$configs['basePath'] = dirname(__DIR__);
+$configs['bootstrap'] = ['log'];
+
+// 参数变量
+$configs['params'] = require(__DIR__ . '/params.php');
+
+// 模块
+$configs['modules']['admini'] = ['class' => 'app\modules\admini\Module'];
+
+// 组件
+$configs['components']['request'] = ['cookieValidationKey' => 'hiBKoy9KHgq32TLHD6VKatPabzBaPN0Y'];
+$configs['components']['cache'] = ['class' => 'yii\caching\FileCache'];
+$configs['components']['errorHandler'] = ['errorAction' => 'site/error'];
+$configs['components']['db'] = require(__DIR__ . '/database.php');
+$configs['components']['mailer'] = ['class' => 'yii\swiftmailer\Mailer', 'useFileTransport' => true];
+$configs['components']['urlManager'] = ['enablePrettyUrl' => false, 'showScriptName' => true, 'rules' => []];
+$configs['components']['log'] = [
+    'traceLevel' => YII_DEBUG ? 3 : 0,
+    'targets' => [
+        [
+            'class' => 'yii\log\FileTarget',
+            'levels' => ['error', 'warning'],
         ],
     ],
-    'components' => [
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'A3xnGRQqzhUKYtsyeyaQY1DYzIrW7q6x',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
-    ],
-    'params' => $params,
 ];
 
-if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
+$configs['components']['user'] = [
+    'identityClass' => 'app\models\User',
+    'enableAutoLogin' => true,
+    'loginUrl' => ['/admini/signin'],
+    'identityCookie' => ['name' => '__user_identity'],
+    'idParam' => '__user'
+];
 
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
+// 开发模式
+if (YII_ENV_DEV) {
+    $configs['bootstrap'][] = 'debug';
+    $configs['modules']['debug'] = ['class' => 'yii\debug\Module'];
+    $configs['bootstrap'][] = 'gii';
+    $configs['modules']['gii'] = ['class' => 'yii\gii\Module'];
 }
 
-return $config;
+return $configs;
