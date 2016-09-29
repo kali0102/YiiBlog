@@ -38,6 +38,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => '用户', 'url' => ['/admini/user']],
             ['label' => '文章', 'url' => ['/admini/post']],
+            ['label' => '分类', 'url' => ['/admini/category']],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
