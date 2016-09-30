@@ -23,6 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title') ?>
 
+
     <?= $form->field($model, 'content') ?>
 
     <?php // echo $form->field($model, 'tags') ?>

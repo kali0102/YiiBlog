@@ -17,7 +17,7 @@ class Category extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'tb_category';
+        return '{{%category}}';
     }
 
     public function rules()
@@ -54,5 +54,15 @@ class Category extends \yii\db\ActiveRecord
     {
         $models = self::find()->select(['id', 'name'])->all();
         return ArrayHelper::map($models, 'id', 'name');
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert)
+                $this->level = !$this->parent_id ? 1 : 2;
+            return true;
+        }
+        return false;
     }
 }

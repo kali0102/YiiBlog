@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         'id' => 'post-form',
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
@@ -25,9 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content')->widget('kucha\ueditor\UEditor', []); ?>
 
-    <?= $form->field($model, 'tags')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'tags')->textInput() ?>
 
     <?= $form->field($model, 'status')->dropDownList(Post::$statusList) ?>
 

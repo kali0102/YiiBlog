@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "479407875c975e7dbee0aefcb85e62d5",
-    "content-hash": "5c27dd23827e5c153817a7f3f5d227c6",
+    "hash": "b4276c45a783fe8238b4b337e9ff5f98",
+    "content-hash": "4cc7bf67eac4cd5a1ea00a9f116bfaea",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -298,6 +298,83 @@
                 "html"
             ],
             "time": "2016-07-16 12:58:58"
+        },
+        {
+            "name": "kucha/ueditor",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BigKuCha/yii2-ueditor-widget.git",
+                "reference": "b41439ee0c69efc800a53087c20d8bfcea0f9507"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BigKuCha/yii2-ueditor-widget/zipball/b41439ee0c69efc800a53087c20d8bfcea0f9507",
+                "reference": "b41439ee0c69efc800a53087c20d8bfcea0f9507",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kucha\\ueditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "null"
+            ],
+            "authors": [
+                {
+                    "name": "BigKuCha",
+                    "email": "nevermore1989@vip.qq.com"
+                }
+            ],
+            "description": "desc",
+            "time": "2015-02-06 02:01:30"
+        },
+        {
+            "name": "liyunfang/yii2-widget-linkpager",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpyii/yii2-widget-linkpager.git",
+                "reference": "2811a2b7a9bd9f0ccc087d5455d282b08001614f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpyii/yii2-widget-linkpager/zipball/2811a2b7a9bd9f0ccc087d5455d282b08001614f",
+                "reference": "2811a2b7a9bd9f0ccc087d5455d282b08001614f",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "liyunfang\\pager\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liyunfang",
+                    "email": "381296986@qq.com"
+                }
+            ],
+            "description": "yii2 Widget for LinkPager",
+            "homepage": "https://github.com/liyunfang/yii2-widget-linkpager",
+            "keywords": [
+                "extension",
+                "linkpager",
+                "yii2",
+                "yii2-widget-linkpager"
+            ],
+            "time": "2015-09-24 04:23:54"
         },
         {
             "name": "swiftmailer/swiftmailer",

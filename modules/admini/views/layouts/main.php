@@ -21,13 +21,13 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body style="font-family: 'Microsoft YaHei UI'">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Yii Blog',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,14 +36,35 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => '用户', 'url' => ['/admini/user']],
-            ['label' => '文章', 'url' => ['/admini/post']],
-            ['label' => '分类', 'url' => ['/admini/category']],
+            [
+                'label' => '技术文章',
+                'url' => '#',
+                'items' => [
+                    ['label' => '文章列表', 'url' => ['/admini/post']],
+                    ['label' => '添加文章', 'url' => ['/admini/post/create']],
+                ]
+            ],
+            [
+                'label' => '文章分类',
+                'url' => '#',
+                'items' => [
+                    ['label' => '分类列表', 'url' => ['/admini/category']],
+                    ['label' => '添加分类', 'url' => ['/admini/category/create']],
+                ]
+            ],
+            [
+                'label' => '用户',
+                'url' => '#',
+                'items' => [
+                    ['label' => '用户列表', 'url' => ['/admini/user']],
+                    ['label' => '添加用户', 'url' => ['/admini/user/create']],
+                ]
+            ],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::beginForm(['/admini/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link']
@@ -66,8 +87,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
+        <p class="pull-left">&copy; Fansye.com <?= date('Y') ?></p>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

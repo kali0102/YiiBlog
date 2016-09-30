@@ -41,12 +41,13 @@ class PostSearch extends Post
      */
     public function search($params)
     {
+
         $query = Post::find();
 
-        // add conditions that should always apply here
-
+//        $pageSize = isset($params['per-page']) ? intval($params['per-page']) : 3;
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+//            'pagination' => ['pageSize' => $pageSize]
         ]);
 
         $this->load($params);
