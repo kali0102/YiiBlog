@@ -8,33 +8,26 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\admini\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '用户';
+$this->params['breadcrumbs'][] = ['label' => '用户', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '列表';
 ?>
-<div class="user-index">
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <?php Pjax::begin(); ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'summary' => false,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                'username',
+                'email:email',
+                'create_time:datetime',
 
-    <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?php Pjax::begin(); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'username',
-            'email:email',
-            'create_time:datetime',
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}'
             ],
-        ],
-    ]); ?>
-    <?php Pjax::end(); ?>
+        ]); ?>
+        <?php Pjax::end(); ?>
+    </div>
 </div>

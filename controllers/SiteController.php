@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Post;
+use app\models\Tag;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -60,7 +62,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $popularRecommendPosts = Post::popularRecommend();
+        $latestPosts = Post::latest();
+        $popularTags = Tag::popular();
+        return $this->render('index', [
+            'latestPosts' => $latestPosts,
+            'popularRecommendPosts' => $popularRecommendPosts,
+            'popularTags' => $popularTags
+        ]);
     }
 
     /**

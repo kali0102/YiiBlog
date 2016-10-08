@@ -1,21 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-
-
 /* @var $this yii\web\View */
 /* @var $model app\modules\admini\models\User */
 
-$this->title = 'Create User';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '用户';
+$this->params['breadcrumbs'][] = ['label' => '用户', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '添加';
+
+echo $this->render('_form', ['model' => $model]);
 ?>
-<div class="user-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>

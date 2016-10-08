@@ -43,7 +43,8 @@ class LoginForm extends Model
         return [
             'username' => '用户名',
             'password' => '密码',
-            'captcha' => '验证码'
+            'captcha' => '验证码',
+            'rememberMe' => '记住我的登录'
         ];
     }
 
@@ -61,8 +62,12 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate())
-            return Yii::$app->admin->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 60);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 60);
         else {
+
+            echo '<pre>';
+            print_r($this->getErrors());
+            die;
             $counter = Yii::$app->session->get('captchaRequired', 0) + 1;
             Yii::$app->session->set('captchaRequired', $counter);
             return false;

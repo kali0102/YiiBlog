@@ -20,9 +20,9 @@ use app\models\Category;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'parent_id')->dropDownList(Category::getFirstLevelList()) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList(Category::getFirstLevelList(), ['prompt' => '-选择分类-']) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => '分类的名称']) ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

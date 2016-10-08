@@ -25,6 +25,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['parent_id', 'level'], 'integer'],
+            ['parent_id', 'default', 'value' => 0],
             [['name'], 'string', 'max' => 64],
         ];
     }
@@ -39,22 +40,16 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getParent()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
+
     public static function find()
     {
         return new CategoryQuery(get_called_class());
     }
 
-    public static function getFirstLevelList()
-    {
-        $models = self::find()->select(['id', 'name'])->all();
-        return ArrayHelper::map($models, 'id', 'name');
-    }
-
-    public static function getSecondLevelList()
-    {
-        $models = self::find()->select(['id', 'name'])->all();
-        return ArrayHelper::map($models, 'id', 'name');
-    }
 
     public function beforeSave($insert)
     {
@@ -64,5 +59,47 @@ class Category extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        self::getList(true);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        self::getList(true);
+    }
+
+    /**
+     * 获得一级分类
+     * @return array
+     */
+    public static function getFirstLevelList()
+    {
+        $models = self::find()->select(['id', 'name'])->where('level=1')->all();
+        return ArrayHelper::map($models, 'id', 'name');
+    }
+
+    /**
+     * 分类Option值列表
+     * @param bool $refreshCache
+     * @return array|mixed
+     */
+    public static function getList($refreshCache = false)
+    {
+        if (!$refreshCache && $options = Yii::$app->cache->get('categoryOptions'))
+            return $options;
+        $options = [];
+        $categorys = self::find()->with('parent')->where("level=2")->all();
+        foreach ($categorys as $category) {
+            if (!isset($options[$category->parent->name]))
+                $options[$category->parent->name] = [];
+            $options[$category->parent->name][$category->id] = $category->name;
+        }
+        Yii::$app->cache->set('categoryOptions', $options, 86400);
+        return $options;
     }
 }

@@ -46,7 +46,7 @@ class Tag extends \yii\db\ActiveRecord
      * @param $tags
      * @return array
      */
-    public static function stringToarray($tags)
+    public static function stringToArray($tags)
     {
         return preg_split('/\s*,\s*/', trim($tags), -1, PREG_SPLIT_NO_EMPTY);
     }
@@ -58,8 +58,8 @@ class Tag extends \yii\db\ActiveRecord
      */
     public function updateFrequency($oldTags, $newTags)
     {
-        $oldTags = self::stringToarray($oldTags);
-        $newTags = self::stringToarray($newTags);
+        $oldTags = self::stringToArray($oldTags);
+        $newTags = self::stringToArray($newTags);
         $this->addTags(array_diff($newTags, $oldTags));
         $this->removeTags(array_diff($oldTags, $newTags));
     }
@@ -73,7 +73,7 @@ class Tag extends \yii\db\ActiveRecord
         self::updateAllCounters(['frequency' => 1], ['in', 'name', $tags]);
         foreach ($tags as $name) {
             if (!self::find()->where(['name' => $name])->exists()) {
-                $tag = clone this;
+                $tag = clone $this;
                 $tag->name = $name;
                 $tag->frequency = 1;
                 $tag->save();
@@ -91,5 +91,25 @@ class Tag extends \yii\db\ActiveRecord
             return;
         self::updateAllCounters(['frequency' => -1], ['in', 'name', $tags]);
         self::deleteAll('frequency <= 0');
+    }
+
+
+    /**
+     * 热门标签
+     * @param int $num
+     * @param bool $refreshCache
+     * @return Tag[]|array|mixed|\yii\db\ActiveRecord[]
+     */
+    public static function popular($num = 20, $refreshCache = false)
+    {
+        if (!$refreshCache && $tags = Yii::$app->cache->get('popularTags')) {
+            if (count($tags) == $num)
+                return $tags;
+        }
+
+        $tags = self::find()->orderBy('frequency')->limit($num)->all();
+
+        Yii::$app->cache->set('popularTags', $tags, 86400);
+        return $tags;
     }
 }

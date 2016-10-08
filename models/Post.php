@@ -16,6 +16,8 @@
  * @property string $content
  * @property string $tags
  * @property integer $status
+ * @property integer $recommend
+ * @property string $summary
  * @property integer $create_time
  * @property integer $update_time
  */
@@ -34,10 +36,18 @@ class Post extends \yii\db\ActiveRecord
     const STATUS_PUBLISHED = 1;
     const STATUS_ARCHIVED = 2;
 
+    const RECOMMEND_YES = 1;
+    const RECOMMEND_NO = 0;
+
     public static $statusList = [
         self::STATUS_DRAFT => '草稿',
         self::STATUS_PUBLISHED => '发布',
         self::STATUS_ARCHIVED => '归档'
+    ];
+
+    public static $recommendList = [
+        self::RECOMMEND_YES => '是',
+        self::RECOMMEND_NO => '否'
     ];
 
     public static function tableName()
@@ -48,9 +58,10 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'title', 'content', 'tags', 'status'], 'required'],
-            [['category_id', 'user_id', 'status', 'create_time', 'update_time'], 'integer'],
-            [['content', 'tags'], 'string'],
+            [['category_id', 'summary', 'title', 'content', 'tags', 'status'], 'required'],
+            [['category_id', 'user_id', 'status', 'recommend', 'create_time', 'update_time'], 'integer'],
+            [['content', 'tags', 'summary'], 'string'],
+            ['recommend', 'default', 'value' => 0],
             [['title'], 'string', 'max' => 128],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -60,7 +71,7 @@ class Post extends \yii\db\ActiveRecord
 
     public function normalizeTags()
     {
-        $tags = explode(',', $this->tags);
+        $tags = Tag::stringToArray($this->tags);
         $this->tags = implode(',', array_unique($tags));
     }
 
@@ -84,6 +95,8 @@ class Post extends \yii\db\ActiveRecord
             'content' => '内容',
             'tags' => '标签',
             'status' => '状态',//（0草稿、1公布、2归档）
+            'recommend' => '推荐',// (0否、1是)
+            'summary' => '简介',
             'create_time' => '创建时间',
             'update_time' => '更新时间',
         ];
@@ -94,6 +107,8 @@ class Post extends \yii\db\ActiveRecord
         parent::afterDelete();
         $model = new Tag;
         $model->updateFrequency($this->tags, '');
+        self::latest('', true);
+        self::popularRecommend('', true);
     }
 
     public function afterFind()
@@ -107,6 +122,8 @@ class Post extends \yii\db\ActiveRecord
         parent::afterSave($insert, $changedAttributes);
         $model = new Tag;
         $model->updateFrequency($this->_oldTags, $this->tags);
+        self::latest('', true);
+        self::popularRecommend('', true);
     }
 
     public function beforeSave($insert)
@@ -127,5 +144,50 @@ class Post extends \yii\db\ActiveRecord
         return new PostQuery(get_called_class());
     }
 
+    /**
+     * 热门推荐
+     * @param int $num
+     * @param bool $refreshCache
+     * @return Post[]|array|mixed|\yii\db\ActiveRecord[]
+     */
+    public static function popularRecommend($num = 6, $refreshCache = false)
+    {
+        if (!$refreshCache && $posts = Yii::$app->cache->get('popularRecommendPost')) {
+            if (count($posts) == $num)
+                return $posts;
+        }
 
+        $posts = self::find()
+            ->where(['status' => self::STATUS_PUBLISHED, 'recommend' => self::RECOMMEND_YES])
+            ->orderBy('update_time')
+            ->limit($num)
+            ->all();
+
+        Yii::$app->cache->set('popularRecommendPost', $posts, 86400);
+        return $posts;
+    }
+
+
+    /**
+     * 最新文章
+     * @param int $num
+     * @param bool $refreshCache
+     * @return Post[]|array|mixed|\yii\db\ActiveRecord[]
+     */
+    public static function latest($num = 6, $refreshCache = false)
+    {
+        if (!$refreshCache && $posts = Yii::$app->cache->get('latestPost')) {
+            if (count($posts) == $num)
+                return $posts;
+        }
+
+        $posts = self::find()
+            ->where(['status' => self::STATUS_PUBLISHED])
+            ->orderBy('update_time')
+            ->limit($num)
+            ->all();
+
+        Yii::$app->cache->set('latestPost', $posts, 86400);
+        return $posts;
+    }
 }

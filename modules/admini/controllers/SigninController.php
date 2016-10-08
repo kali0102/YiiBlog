@@ -19,7 +19,7 @@ use app\modules\admini\models\LoginForm;
 class SigninController extends Controller
 {
 
-    public $attempts = 2;
+    public $attempts = 3;
 
     public function behaviors()
     {

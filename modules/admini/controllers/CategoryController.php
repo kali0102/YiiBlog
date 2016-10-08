@@ -54,7 +54,7 @@ class CategoryController extends Controller
         $request = Yii::$app->request;
         if ($model->load($request->post()) && $model->save())
             return $this->redirect(['index']);
-        return $this->render('create', compact('model'));
+        return $this->render('update', compact('model'));
     }
 
     public function actionDelete($id)

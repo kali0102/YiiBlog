@@ -38,7 +38,7 @@ $configs['components']['log'] = [
 ];
 
 $configs['components']['user'] = [
-    'identityClass' => 'app\models\User',
+    'identityClass' => 'app\modules\admini\models\User',
     'enableAutoLogin' => true,
     'loginUrl' => ['/admini/signin'],
     'identityCookie' => ['name' => '__user_identity'],

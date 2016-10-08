@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Post;
+use app\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PostSearch */
@@ -13,30 +15,36 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => ['class' => 'form-inline'],
+        'fieldConfig' => ['template' => "{label}{input}"],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'title')->textInput([
+        'class' => 'form-control input-sm',
+        'placeholder' => '文章的标题'
+    ])->label('文章标题:');
+    ?>
 
-    <?= $form->field($model, 'category_id') ?>
+    <?= $form->field($model, 'category_id')
+        ->dropDownList(Category::getList(),
+            [
+                'class' => 'form-control input-sm',
+                'prompt' => '-选择分类-'
+            ]
+        )->label('分类:');
+    ?>
 
-    <?= $form->field($model, 'user_id') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-
-    <?= $form->field($model, 'content') ?>
-
-    <?php // echo $form->field($model, 'tags') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'create_time') ?>
-
-    <?php // echo $form->field($model, 'update_time') ?>
+    <?= $form->field($model, 'status')
+        ->dropDownList(Post::$statusList,
+            [
+                'class' => 'form-control input-sm',
+                'prompt' => '-选择状态-'
+            ]
+        )->label('状态:');
+    ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('搜索', ['class' => 'btn btn-sm btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -27,21 +27,6 @@ $this->params['breadcrumbs'][] = '列表';
         <?= GridView::widget([
             'summary' => false,
             'dataProvider' => $dataProvider,
-//            'filterSelector' => "select[name='" . $dataProvider->getPagination()->pageSizeParam . "'],input[name='" . $dataProvider->getPagination()->pageParam . "']",
-//            'pager' => [
-//                'options' => ['style' => 'display:inline;padding-right:5px;', 'class' => 'pagination'],
-//                'class' => \liyunfang\pager\LinkPager::className(),
-//                'template' => '{pageButtons} {customPage} {pageSize}',
-//                'pageSizeList' => [2, 3, 4, 5],
-//                'pageSizeMargin' => 'margin-left:5px;margin-right:5px;',
-//                'pageSizeOptions' => ['class' => 'form-control', 'style' => 'display: inline-block;width:auto;margin-top:0px;'],
-//                'customPageWidth' => 50,
-//                'customPageBefore' => ' 跳转 ',
-//                'customPageAfter' => ' 页数 ',
-//                'customPageMargin' => 'margin-left:5px;margin-right:5px;',
-//                'customPageOptions' => ['class' => 'form-control', 'style' => 'display: inline-block;margin-top:0px;']
-//            ],
-//            'layout' => '{items}<div class="row"><div class="pull-left">{summary}</div><div class="pull-right">{pager}</div></div>',
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -58,16 +43,25 @@ $this->params['breadcrumbs'][] = '列表';
                         return $m->user->username;
                     }
                 ],
+
                 [
-                    'attribute' => 'status',
+                    'attribute' => 'recommend',
                     'value' => function ($m) {
-                        return Post::$statusList[$m->status];
+                        return Post::$recommendList[$m->recommend];
                     }
                 ],
+
                 [
                     'attribute' => 'create_time',
                     'value' => function ($m) {
                         return date("Y/m/d H:i", $m->update_time);
+                    }
+                ],
+
+                [
+                    'attribute' => 'status',
+                    'value' => function ($m) {
+                        return Post::$statusList[$m->status];
                     }
                 ],
 

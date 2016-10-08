@@ -8,32 +8,34 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '文章分类';
+$this->params['breadcrumbs'][] = ['label' => '文章分类', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '列表';
 ?>
-<div class="category-index">
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <?php Pjax::begin(); ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'summary' => false,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                [
+                    'attribute' => 'parent_id',
+                    'value' => function ($m) {
+                        return isset($m->parent) ? $m->parent->name : '';
+                    }
+                ],
+                'name',
 
-    <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?php Pjax::begin(); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'parent_id',
-            'name',
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}'
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update}'
+                ],
             ],
-        ],
-    ]); ?>
-    <?php Pjax::end(); ?>
+        ]); ?>
+        <?php Pjax::end(); ?>
+    </div>
 </div>

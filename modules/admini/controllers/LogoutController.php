@@ -19,7 +19,7 @@ class LogoutController extends Controller
 
     public function actionIndex()
     {
-        Yii::$app->admin->logout();
+        Yii::$app->user->logout();
         return $this->goHome();
     }
 }
