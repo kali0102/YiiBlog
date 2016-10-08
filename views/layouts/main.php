@@ -21,7 +21,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body style="font-family: 'Microsoft YaHei UI'">
 <?php $this->beginBody() ?>
 
 <div class="wrap">

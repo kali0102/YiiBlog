@@ -1,18 +1,17 @@
 <?php
+
 /**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * 资源管理类
+ *
+ * @author kali.liu <kali.liu@qq.com>
+ * @link http://www.fansye.com/
+ * @copyright Copyright &copy; 2016-2068 Fansye.com Inc
  */
 
 namespace app\assets;
 
 use yii\web\AssetBundle;
 
-/**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';

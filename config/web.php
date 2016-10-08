@@ -8,7 +8,7 @@
  */
 
 $configs = [];
-$configs['id'] = 'Y2OS';
+$configs['id'] = 'YiiBlog';
 $configs['name'] = 'YiiBlog';
 $configs['language'] = 'zh-CN';
 $configs['basePath'] = dirname(__DIR__);
@@ -18,7 +18,7 @@ $configs['bootstrap'] = ['log'];
 $configs['params'] = require(__DIR__ . '/params.php');
 
 // 模块
-$configs['modules']['admini'] = ['class' => 'app\modules\admini\Module'];
+$configs['modules'][ADMIN_MODULE] = ['class' => 'app\modules\admini\Module'];
 
 // 组件
 $configs['components']['request'] = ['cookieValidationKey' => 'hiBKoy9KHgq32TLHD6VKatPabzBaPN0Y'];
@@ -45,12 +45,10 @@ $configs['components']['user'] = [
     'idParam' => '__user'
 ];
 
-// 开发模式
-if (YII_ENV_DEV) {
-    $configs['bootstrap'][] = 'debug';
-    $configs['modules']['debug'] = ['class' => 'yii\debug\Module'];
-    $configs['bootstrap'][] = 'gii';
-    $configs['modules']['gii'] = ['class' => 'yii\gii\Module'];
-}
+// 开发模式使用
+//$configs['bootstrap'][] = 'debug';
+//$configs['modules']['debug'] = ['class' => 'yii\debug\Module'];
+//$configs['bootstrap'][] = 'gii';
+//$configs['modules']['gii'] = ['class' => 'yii\gii\Module'];
 
 return $configs;

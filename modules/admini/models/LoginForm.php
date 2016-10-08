@@ -64,10 +64,6 @@ class LoginForm extends Model
         if ($this->validate())
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 60);
         else {
-
-            echo '<pre>';
-            print_r($this->getErrors());
-            die;
             $counter = Yii::$app->session->get('captchaRequired', 0) + 1;
             Yii::$app->session->set('captchaRequired', $counter);
             return false;
