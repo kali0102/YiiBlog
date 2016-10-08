@@ -16,3 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::decode($model->content); ?>
     </div>
 </div>
+<link href="/static/styles/shCore.css" rel="stylesheet" type="text/css"/>
+<link href="/static/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+<script src="/static/scripts/shCore.js" type="text/javascript"></script>
+<script src="/static/scripts/shBrushPhp.js" type="text/javascript"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.all()
+</script>

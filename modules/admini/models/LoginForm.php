@@ -2,7 +2,7 @@
 
 /**
  * 管理模块
- * 登录模型类
+ * 登录模型
  *
  * @author kali.liu <kali.liu@qq.com>
  * @link http://www.fansye.com/

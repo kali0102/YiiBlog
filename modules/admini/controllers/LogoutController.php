@@ -2,7 +2,7 @@
 
 /**
  * 管理模块
- * 退出控制器
+ * 退出
  *
  * @author kali.liu <kali.liu@qq.com>
  * @link http://www.fansye.com/

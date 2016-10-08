@@ -1,7 +1,8 @@
 <?php
 
 /**
- * 全局配置
+ * 应用主配置
+ *
  * @author kali.liu <kali.liu@qq.com>
  * @link http://www.fansye.com/
  * @copyright Copyright &copy; 2016-2068 Fansye.com Inc
@@ -21,10 +22,10 @@ $configs['params'] = require(__DIR__ . '/params.php');
 $configs['modules'][ADMIN_MODULE] = ['class' => 'app\modules\admini\Module'];
 
 // 组件
+$configs['components']['db'] = require(__DIR__ . '/database.php');
 $configs['components']['request'] = ['cookieValidationKey' => 'hiBKoy9KHgq32TLHD6VKatPabzBaPN0Y'];
 $configs['components']['cache'] = ['class' => 'yii\caching\FileCache'];
 $configs['components']['errorHandler'] = ['errorAction' => 'site/error'];
-$configs['components']['db'] = require(__DIR__ . '/database.php');
 $configs['components']['mailer'] = ['class' => 'yii\swiftmailer\Mailer', 'useFileTransport' => true];
 $configs['components']['urlManager'] = ['enablePrettyUrl' => false, 'showScriptName' => true, 'rules' => []];
 $configs['components']['log'] = [

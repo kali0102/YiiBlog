@@ -1,7 +1,8 @@
 <?php
 
 /**
- * 分类控制器
+ * 管理模块
+ * 文章分类
  *
  * @author kali.liu <kali.liu@qq.com>
  * @link http://www.fansye.com/

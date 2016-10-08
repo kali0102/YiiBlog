@@ -1,7 +1,8 @@
 <?php
 
 /**
- * 文章控制器
+ * 管理模块
+ * 文章
  *
  * @author kali.liu <kali.liu@qq.com>
  * @link http://www.fansye.com/
