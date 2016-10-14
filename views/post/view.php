@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Post */
@@ -9,6 +8,17 @@ use yii\widgets\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => '文章', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerCssFile('/static/styles/shCore.css');
+$this->registerCssFile('/static/styles/shThemeDefault.css');
+$this->registerCss('.syntaxhighlighter { overflow: hidden !important; }');
+
+$this->registerJsFile('/static/scripts/shCore.js', ['depends' => ['app\assets\AppAsset']]);
+$this->registerJsFile('/static/scripts/shBrushPhp.js', ['depends' => ['app\assets\AppAsset']]);
+
+$this->registerJs('
+SyntaxHighlighter.all()
+', \yii\web\View::POS_END);
 ?>
 <div class="post-view">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -16,10 +26,3 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::decode($model->content); ?>
     </div>
 </div>
-<link href="/static/styles/shCore.css" rel="stylesheet" type="text/css"/>
-<link href="/static/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
-<script src="/static/scripts/shCore.js" type="text/javascript"></script>
-<script src="/static/scripts/shBrushPhp.js" type="text/javascript"></script>
-<script type="text/javascript">
-    SyntaxHighlighter.all()
-</script>

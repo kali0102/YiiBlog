@@ -38,6 +38,21 @@ $configs['components']['log'] = [
     ],
 ];
 
+// 去除自带jquery
+//$configs['components']['assetManager'] = [
+//    'bundles' => [
+//        'yii\web\JqueryAsset' => [
+//            'js' => []
+//        ],
+//        'yii\bootstrap\BootstrapPluginAsset' => [
+//            'js'=>[]
+//        ],
+//        'yii\bootstrap\BootstrapAsset' => [
+//            'css' => [],
+//        ],
+//    ]
+//];
+
 $configs['components']['user'] = [
     'identityClass' => 'app\modules\admini\models\User',
     'enableAutoLogin' => true,
